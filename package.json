@@ -1,0 +1,27 @@
+{
+  "name": "slept",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cornshakes/slept"
+  },
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "tsc"
+  },
+  "keywords": [
+    "sleep",
+    "wait",
+    "timeout",
+    "delay",
+    "async",
+    "promise"
+  ],
+  "author": "michael.hopfner@icloud.com",
+  "description": "async sleep function",
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  }
+}
