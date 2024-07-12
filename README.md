@@ -1,5 +1,7 @@
-sleep sleeps using a Promise and setTimeout, so it's async and non-blocking.
+# Slept
 
-```sh {"id":"01J1W6D2PC8ZE4S92H7NVVX0TQ"}
-await sleep(1000); // sleeps for 1000 ms
-```
+Slept contains some timing related functions that I got tired of copy pasting into new projects.
+
+This is not for exact timing. It uses the built-in setTimeout, nothing else.
+
+Check the tests for documentation.
