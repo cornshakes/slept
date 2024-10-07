@@ -1,4 +1,4 @@
-import { sleep, wait_for } from '../src/index';
+import { promt, sleep, wait_for } from '../src/index';
 
 test('sleep returns a promise that resolves after the timeout', async () => {
   const before = Date.now();
@@ -66,5 +66,32 @@ describe('wait_for', () => {
     await expect(waiter).rejects.toThrow('timeout');
     await sleep(10);
     expect(nope).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('promt', () => {
+  test('returns a promise and its resolve and reject functions', async () => {
+    const { promise, resolve, reject } = promt();
+    expect(promise).toBeInstanceOf(Promise);
+    expect(resolve).toBeInstanceOf(Function);
+    expect(reject).toBeInstanceOf(Function);
+  });
+
+  test('resolves the promise when the resolve function is called', async () => {
+    const { promise, resolve } = promt();
+    resolve();
+    expect(promise).resolves.toBeUndefined();
+  });
+
+  test('returns the value passed to the resolve function', async () => {
+    const { promise, resolve } = promt<string>();
+    resolve('hello');
+    expect(promise).resolves.toEqual('hello');
+  });
+
+  test('rejects the promise when the reject function is called', async () => {
+    const { promise, reject } = promt();
+    reject('absolutely not');
+    await expect(promise).rejects.toEqual('absolutely not');
   });
 });

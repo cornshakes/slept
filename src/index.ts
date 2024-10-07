@@ -43,3 +43,19 @@ export const wait_for = async (
 
   await Promise.race([timer(), poller()]);
 };
+
+/**
+ * Creates a promise and its corresponding resolve and reject functions to hide this boilerplate.
+ * @returns An object containing the promise, resolve and reject functions.
+ */
+export const promt = <T = void>() => {
+  let resolve: (value: T) => void = (_: T) => {};
+  let reject: (reason: any) => void = (_: any) => {};
+
+  const promise = new Promise<T>((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+
+  return { promise, resolve, reject };
+};
