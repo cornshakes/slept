@@ -23,25 +23,24 @@ export const wait_for = async (
     interval?: number;
     timeout?: number;
     timeout_message?: string;
-  } = {}
+  } = {},
 ) => {
-  const { interval = 100, timeout = 1000, timeout_message = 'timeout' } = options;
-  let timed_out = false;
+  const {
+    interval = 100,
+    timeout = 1000,
+    timeout_message = "timeout",
+  } = options;
+  const timeout_date = new Date().getTime() + timeout;
 
-  const timer = async () => {
-    await sleep(timeout);
-    timed_out = true;
-    throw Error(timeout_message);
-  };
-
-  const poller = async () => {
-    while (!timed_out && !(await condition())) {
-      await sleep(interval);
+  while (new Date().getTime() < timeout_date) {
+    if (await condition()) {
+      await sleep(1);
+      return;
     }
-    await sleep(1);
-  };
+    await sleep(interval);
+  }
 
-  await Promise.race([timer(), poller()]);
+  throw Error(timeout_message);
 };
 
 /**
